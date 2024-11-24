@@ -1,0 +1,58 @@
+.App {
+  text-align: center;
+  font-size: 28px;
+  color: #00007F;
+  background-color: aqua;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #7f0000;
+  font-family: 'Times New Roman', Times, serif;
+  min-height: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: yellow;
+  text-align: center;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-choices1 {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 24px;
+  background-color: aqua;
+  color:#ffffff;
+  text-align: left;
+  list-style-position: inside;
+  text-indent: 18lh;
+  height:86vmin;
+  background-image: url(techno-party-lifestyle.jpg);
+  background-size: cover;
+    background-repeat: no-repeat;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
