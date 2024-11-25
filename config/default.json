@@ -1,0 +1,4 @@
+{
+    "mongoURI": "mongodb+srv://browl191:Ko3hMTlTVUgMWSEJ@itdev161.ksomt.mongodb.net/?retryWrites=true&w=majority&appName=ITDEV161",
+    "jwtSecret": "maytheforcebewithyou"
+}
