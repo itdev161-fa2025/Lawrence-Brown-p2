@@ -3,14 +3,14 @@ import './App.css';
 import axios from 'axios';
 import { Routes, Route, Link } from 'react-router-dom';
 import Home from './components/Home/Home';
-import Register from './components/Register/Register';
-import Login from './components/Login/Login'
+import EnterBS from './components/EnterBS/EnterBS';
+import DisplayBSLog from './components/DisplayBSLog/DisplayBSLog'
 
 class App extends React.Component {
   state = {
     data: null,
     token: null,
-    user: null
+    BSLog: null
   }
 
   componentDidMount() {
@@ -24,14 +24,14 @@ class App extends React.Component {
         console.error(`Error fetching data ${error}`);
       })
 
-      this.authenticateUser();
+      this.getLog();
   }
 
-  authenticateUser = () => {
+  getLog = () => {
     const token = localStorage.getItem('token');
 
     if(!token) {
-      localStorage.removeItem('user')
+      localStorage.removeItem('BSLog')
       this.setState({ user: null });
     }
 
@@ -41,29 +41,23 @@ class App extends React.Component {
           'x-auth-token': token
         }
       }
-      axios.get('http://localhost:3001/api/auth', config)
+      axios.get('http://localhost:5000/api/bslentries', config)
         .then((response) => {
-          localStorage.setItem('user', response.data.name)
-          this.setState({ user: response.data.name })
+          //localStorage.setItem('BSLog', response.data.name)
+          this.setState({ BSLog: response.data })
         })
         .catch((error) => {
-          localStorage.removeItem('user');
-          this.setState({ user: null });
+          //localStorage.removeItem('BSLog');
+          this.setState({ BSLog: null });
           console.error(`Error logging in: ${error}`);
         })
     }
   }
 
-  logOut = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    this.setState({ user: null, token: null });
-  }
-
   render() {
     let { user, data } = this.state;
     const authProps = {
-      authenticateUser: this.authenticateUser
+      log: this.state.BSLog
     }
 
     return (
@@ -72,18 +66,15 @@ class App extends React.Component {
           <h1>Blood Sugar Log</h1>
           <ul>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="/register">Register</Link></li>
-            {user ? 
-              <li><Link to="" onClick={this.logOut}>Log out</Link></li> :
-              <li><Link to="/login">Log in</Link> </li>
-            }
+            <li><Link to="/EnterBS">Blood Sugar Log Entry</Link></li>
+            <li><Link to="/DisplayBSLog">Display Log</Link></li>
           </ul>
         </header>
         <main>
           <Routes>
             <Route path="/" element={<Home user={user} data={data} />} />
-            <Route path="/register" element={<Register {...authProps} />} />
-            <Route path="/login" element={<Login {...authProps} />} />
+            <Route path="/EnterBS" element={<EnterBS  />} />
+            <Route path="/DisplayBSLog" element={<DisplayBSLog {...authProps} />} />
           </Routes>
         </main>
         

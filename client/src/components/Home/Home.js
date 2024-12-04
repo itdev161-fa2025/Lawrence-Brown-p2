@@ -9,7 +9,7 @@ const Home = ( {user, data} ) => {
           <div>{data}</div>
         </React.Fragment> :
         <React.Fragment>
-          Please Register or Login
+          Please Enter Blood Sugar or Display Blood Sugar Log
         </React.Fragment>
       }
     

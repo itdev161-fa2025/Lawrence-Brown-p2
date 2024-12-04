@@ -2,18 +2,17 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const Register = ({ authenticateUser }) => {
+const EnterBS = () => {
   const navigate = useNavigate();
   const [userData, setUserData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
+    date: '',
+    time: '',
+    mgdl: '',
   });
 
   const [errorData, setErrorData] = useState({ errors: null });
   
-  const { name, email, password, passwordConfirm } = userData;
+  const { date, time, mgdl } = userData;
   const { errors } = errorData;
 
   const onChange = e => {
@@ -24,15 +23,12 @@ const Register = ({ authenticateUser }) => {
     })
   }
 
-  const registerUser = async() => {
-    if (password !== passwordConfirm) {
-      console.log('Passwords do not match');
-    }
-    else {
-      const newUser = {
-        name: name,
-        email: email,
-        password: password
+  const enterBloodSugar = async() => {
+
+      const newBSLEntry = {
+        date: date,
+        time: time,
+        mgdl: mgdl
       }
 
       try {
@@ -42,10 +38,11 @@ const Register = ({ authenticateUser }) => {
           }
         }
 
-        const body = JSON.stringify(newUser);
-        const res = await axios.post('http://localhost:5000/api/users', body, config);
+        const body = JSON.stringify(newBSLEntry);
+
+        const res = await axios.post('http://localhost:5000/api/bslentry', body, config);
         
-        // Store user data and redirect
+        // Store data and redirect
         localStorage.setItem('token', res.data.token);
         navigate('/');
       } catch (error) {
@@ -58,51 +55,38 @@ const Register = ({ authenticateUser }) => {
         })
       }
 
-      authenticateUser();
-    }
+      //getLog();
   }
 
   return (
     <div>
-      <h2>Register</h2>
+      <h2>Enter Blood Sugar</h2>
       <div>
         <input
           type='text'
-          placeholder='Name'
-          name='name'
-          value={name}
+          placeholder='Date'
+          name='date'
           onChange={e => onChange(e)}
         />
       </div>
       <div>
         <input
           type='text'
-          placeholder='Email'
-          name='email'
-          value={email}
+          placeholder='Time'
+          name='time'
           onChange={e => onChange(e)}
         />
       </div>
       <div>
         <input
           type='text'
-          placeholder='Password'
-          name='password'
-          value={password}
+          placeholder='Blood Sugar'
+          name='mgdl'
           onChange={e => onChange(e)}
         />
       </div>
-      <div>
-        <input
-          type='text'
-          placeholder='Confirm Password'
-          name='passwordConfirm'
-          value={passwordConfirm}
-          onChange={e => onChange(e)}
-        />
-      </div>
-      <div>
-        <button onClick={() => registerUser()}>Register</button>
+   <div>
+        <button onClick={() => enterBloodSugar()}>Enter Blood Sugar</button>
       </div>
       <div>
         {errors && errors.map(error => 
@@ -112,4 +96,4 @@ const Register = ({ authenticateUser }) => {
   )
 }
 
-export default Register
+export default EnterBS
